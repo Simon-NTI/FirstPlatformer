@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "FirstPlatformer.sln"
+    "dotnet.defaultSolution": "FirstProject.sln"
 }
