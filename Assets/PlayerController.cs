@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     int speed = 5;
+    [SerializeField]
+    float punchCooldown = 0.3f;
+    float punchCooldownTimer;
 
     [SerializeField]
     Sprite sprite;
@@ -44,6 +43,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandlePunch();
         SetCameraPosition();
         HandleDucking();
         CheckPlayerDirection();
@@ -101,19 +101,29 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetAxisRaw("Horizontal") > 0)
         {
+            if(transform.childCount == 0)
+            {
+                transform.localScale = new(1, gameObject.transform.localScale.y);
+            }
             lastFacedRight = true;
         }
         else if(Input.GetAxisRaw("Horizontal") < 0)
         {
+            if(transform.childCount == 0)
+            {
+                transform.localScale = new(-1, gameObject.transform.localScale.y);
+            }
             lastFacedRight = false;
         }
     }
-
     private void HandlePunch()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        Debug.Log(punchCooldownTimer);
+        punchCooldownTimer -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.E) && punchCooldownTimer <= 0)
         {
-            Object.Instantiate(arm);
+            Instantiate(arm, transform);
+            punchCooldownTimer = punchCooldown;
         }
     }
     private void HandleDucking()
@@ -124,13 +134,13 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.S))
         {
             speed = 3;
-            gameObject.transform.localScale = new(1, duckFactor, 1);
+            transform.localScale = new(transform.localScale.x, duckFactor, 1);
             movement = new(0, -sprite.bounds.size.y * (1 - duckFactor));
         }
         else if(Input.GetKeyUp(KeyCode.S))
         {
             speed = 5;
-            gameObject.transform.localScale = new(1, 1, 1);
+            transform.localScale = new(transform.localScale.x, 1, 1);
             movement = new(0, sprite.bounds.size.y * (1 - duckFactor));
         }
         transform.Translate(movement);
