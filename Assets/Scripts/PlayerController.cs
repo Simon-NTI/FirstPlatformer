@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     float punchCooldown = 0.3f;
     float punchCooldownTimer;
 
+    bool isDucking = false;
+
     [SerializeField]
     Sprite sprite;
 
@@ -28,8 +30,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     float groundRadius = 0.2f;
-
-    bool lastFacedRight;
 
     [SerializeField]
     LayerMask groundLayer;
@@ -105,7 +105,6 @@ public class PlayerController : MonoBehaviour
             {
                 transform.localScale = new(1, gameObject.transform.localScale.y);
             }
-            lastFacedRight = true;
         }
         else if(Input.GetAxisRaw("Horizontal") < 0)
         {
@@ -113,12 +112,10 @@ public class PlayerController : MonoBehaviour
             {
                 transform.localScale = new(-1, gameObject.transform.localScale.y);
             }
-            lastFacedRight = false;
         }
     }
     private void HandlePunch()
     {
-        Debug.Log(punchCooldownTimer);
         punchCooldownTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.E) && punchCooldownTimer <= 0)
         {
@@ -131,19 +128,24 @@ public class PlayerController : MonoBehaviour
         // duckFactor is how much of the sprites original height the sprite will have when ducking
         float duckFactor = 0.3f;
         Vector3 movement = new();
-        if(Input.GetKeyDown(KeyCode.S))
+        if(transform.childCount == 0)
         {
-            speed = 3;
-            transform.localScale = new(transform.localScale.x, duckFactor, 1);
-            movement = new(0, -sprite.bounds.size.y * (1 - duckFactor));
+            if(Input.GetKey(KeyCode.S) && !isDucking)
+            {
+                speed = 3;
+                transform.localScale = new(transform.localScale.x, duckFactor, 1);
+                movement = new(0, -sprite.bounds.size.y * (1 - duckFactor));
+                isDucking = true;
+            }
+            else if (!Input.GetKey(KeyCode.S) && isDucking)
+            {
+                speed = 5;
+                transform.localScale = new(transform.localScale.x, 1, 1);
+                movement = new(0, sprite.bounds.size.y * (1 - duckFactor));
+                isDucking = false;
+            }
+            transform.Translate(movement);
         }
-        else if(Input.GetKeyUp(KeyCode.S))
-        {
-            speed = 5;
-            transform.localScale = new(transform.localScale.x, 1, 1);
-            movement = new(0, sprite.bounds.size.y * (1 - duckFactor));
-        }
-        transform.Translate(movement);
     }
     private void OnDrawGizmosSelected() {
 
