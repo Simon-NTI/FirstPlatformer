@@ -29,18 +29,13 @@ public class PlayerController : MonoBehaviour
     Transform feet;
 
     [SerializeField]
-    float groundRadius = 0.2f;
-
-    [SerializeField]
     LayerMask groundLayer;
 
-    // Start is called before the first frame update
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         HandlePunch();
@@ -51,31 +46,14 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(speed * Time.deltaTime * new Vector2(movementX, 0).normalized);
 
-        //Debug.Log(movementX);
-        //Debug.Log(rigidbody.velocity.x);
-
-
-        // rigidbody.velocity = new Vector2(rigidbody.velocity.x + movementX * 5 * Time.deltaTime, rigidbody.velocity.y);
-
-        /*
-        if(Input.GetAxisRaw("Jump") > 0)
-        {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y + speedPerTick * 3);
-        }
-        */
-
-        // bool isTouchingGround = Physics2D.OverlapCircle(GetFootPosition(), groundRadius, groundLayer);
         bool isTouchingGround = Physics2D.OverlapBox(GetFootPosition(), GetFootSize(), 0, groundLayer);
 
         if(Input.GetAxisRaw("Jump") > 0 && isTouchingGround && hasReleasedJumpButton)
         {
             rigidbody.AddForce(Vector2.up * jumpForce);
             hasReleasedJumpButton = false;
-
-            //rigidbody.velocity = new Vector3(0, 5, 0);
         }
         
-
         if(Input.GetAxisRaw("Jump") == 0)
         {
             hasReleasedJumpButton = true;
@@ -148,12 +126,9 @@ public class PlayerController : MonoBehaviour
         }
     }
     private void OnDrawGizmosSelected() {
-
-        // Gizmos.DrawCube(Vector2.zero, Vector2.one * 5);
         if (feet)
         {
             Gizmos.DrawWireCube(GetFootPosition(), GetFootSize());
-            // Gizmos.DrawWireSphere(GetFootPosition(), groundRadius);
         }
     }
 }
