@@ -26,6 +26,7 @@ public class LargeEnemyController : MonoBehaviour
 
     private void HandleWalking()
     {
+        // The enemy will walk in one direction for a random amount of time and then turn around
         turnAroundTimer += Time.deltaTime;
         if(turnAroundTimer >= turnAroundTreshhold)
         {

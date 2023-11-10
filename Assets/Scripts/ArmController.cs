@@ -29,7 +29,6 @@ public class ArmController : MonoBehaviour
         scaleTimer = lifetime * difference - targetscale;
     }
 
-    // Update is called once per frame
     void Update()
     {
         lifetime -= Time.deltaTime;

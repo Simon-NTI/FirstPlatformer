@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new();
         if(transform.childCount == 0)
         {
+            // Scales the player down and moves them to account for the offset created by the scaling
             if(Input.GetKey(KeyCode.S) && !isDucking)
             {
                 speed = 3;
