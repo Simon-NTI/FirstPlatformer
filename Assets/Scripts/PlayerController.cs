@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -5,16 +6,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    int speed = 5;
-    [SerializeField]
-    float punchCooldown = 0.3f;
+    [SerializeField] int speed = 5;
+    [SerializeField] float punchCooldown = 0.3f;
     float punchCooldownTimer;
 
     bool isDucking = false;
 
-    [SerializeField]
-    Sprite sprite;
+    [SerializeField] Sprite sprite;
 
     [SerializeField]
     GameObject arm;
@@ -111,14 +109,12 @@ public class PlayerController : MonoBehaviour
             // Scales the player down and moves them to account for the offset created by the scaling
             if(Input.GetKey(KeyCode.S) && !isDucking)
             {
-                speed = 3;
                 transform.localScale = new(transform.localScale.x, duckFactor, 1);
                 movement = new(0, -sprite.bounds.size.y * (1 - duckFactor));
                 isDucking = true;
             }
             else if (!Input.GetKey(KeyCode.S) && isDucking)
             {
-                speed = 5;
                 transform.localScale = new(transform.localScale.x, 1, 1);
                 movement = new(0, sprite.bounds.size.y * (1 - duckFactor));
                 isDucking = false;

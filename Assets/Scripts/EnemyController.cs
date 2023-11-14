@@ -9,14 +9,17 @@ public class LargeEnemyController : MonoBehaviour
     float turnAroundTreshhold = 3;
     float walkSpeed;
 
+    GameObject player;
+
     [SerializeField]
     int hitpoints = 2;
 
 
     void Start()
     {
-        walkSpeed = Random.Range(1f, 4f);
-        turnAroundTreshhold = Random.Range(1f, 3f);
+        player = GameObject.FindGameObjectWithTag("Player");
+        walkSpeed = Random.Range(3f, 4f);
+        //turnAroundTreshhold = Random.Range(1f, 3f);
     }
 
     void Update()
@@ -27,6 +30,7 @@ public class LargeEnemyController : MonoBehaviour
     private void HandleWalking()
     {
         // The enemy will walk in one direction for a random amount of time and then turn around
+        /*
         turnAroundTimer += Time.deltaTime;
         if(turnAroundTimer >= turnAroundTreshhold)
         {
@@ -35,10 +39,20 @@ public class LargeEnemyController : MonoBehaviour
             turnAroundTreshhold = Random.Range(1, 2);
         }
         transform.Translate(walkSpeed * Time.deltaTime, 0, 0);
+        */
+
+        if (player.transform.position.x > transform.position.x)
+        {
+            transform.Translate(new(walkSpeed * Time.deltaTime, 0));
+        }
+        else 
+        {
+            transform.Translate(new(-walkSpeed * Time.deltaTime, 0));
+        }
         
     }
 
-    private void OnTriggerStay2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("arm"))
         {
             hitpoints--;

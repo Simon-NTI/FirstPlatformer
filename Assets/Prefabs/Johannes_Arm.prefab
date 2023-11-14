@@ -100,9 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armSprite: {fileID: 21300000, guid: c993f9c103e944c4c80d1eed3d0f5967, type: 3}
   parentSprite: {fileID: 21300000, guid: 18c1fb3956e7b994cb626806d8418b8d, type: 3}
-  lifetime: 0.5
+  initialLifeTime: 0.5
   collider: {fileID: 7173684112246267407}
-  targetscale: 3
+  targetscale: 3.5
 --- !u!61 &7173684112246267407
 BoxCollider2D:
   m_ObjectHideFlags: 0
