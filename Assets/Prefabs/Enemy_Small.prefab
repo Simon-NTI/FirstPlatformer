@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1324715121469443043}
   - component: {fileID: 7081844980704107412}
   - component: {fileID: 2092436717754715402}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy_Small
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0740b4b03c581c447a6a72a97a85000c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnAroundTreshhold: 3
-  hitpoints: 1
+  hitpoints: 2
 --- !u!50 &7081844980704107412
 Rigidbody2D:
   serializedVersion: 4

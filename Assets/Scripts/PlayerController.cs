@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -14,20 +15,16 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Sprite sprite;
 
-    [SerializeField]
-    GameObject arm;
+    [SerializeField] GameObject arm;
 
     bool hasReleasedJumpButton = true;
 
-    [SerializeField]
-    int jumpForce = 300;
+    [SerializeField] int jumpForce = 300;
     new Rigidbody2D rigidbody;
 
-    [SerializeField]
-    Transform feet;
+    [SerializeField] Transform feet;
 
-    [SerializeField]
-    LayerMask groundLayer;
+    [SerializeField] LayerMask groundLayer,  enemyLayer;
 
     void Awake()
     {
@@ -37,7 +34,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandlePunch();
-        SetCameraPosition();
         HandleDucking();
         CheckPlayerDirection();
         float movementX = Input.GetAxisRaw("Horizontal");
@@ -45,6 +41,10 @@ public class PlayerController : MonoBehaviour
         transform.Translate(speed * Time.deltaTime * new Vector2(movementX, 0).normalized);
 
         bool isTouchingGround = Physics2D.OverlapBox(GetFootPosition(), GetFootSize(), 0, groundLayer);
+        if(!isTouchingGround)
+        {
+            isTouchingGround = Physics2D.OverlapBox(GetFootPosition(), GetFootSize(), 0, enemyLayer);
+        }
 
         if(Input.GetAxisRaw("Jump") > 0 && isTouchingGround && hasReleasedJumpButton)
         {
@@ -60,18 +60,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 GetFootPosition()
     {
-        float height1 = GetComponent<Collider2D>().bounds.extents.y;
         float height = GetComponent<Collider2D>().bounds.size.y;
         return transform.position + Vector3.down * height / 2;
     }
     private Vector2 GetFootSize()
     {
         return new(GetComponent<Collider2D>().bounds.size.x * 0.9f, 0.1f);
-    }
-    private void SetCameraPosition()
-    {
-        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-        camera.transform.position = new(transform.position.x, 0, -10);
     }
     private void CheckPlayerDirection()
     {

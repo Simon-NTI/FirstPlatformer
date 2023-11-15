@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class LargeEnemyController : MonoBehaviour
 {
-    float turnAroundTimer = 0;
-    float turnAroundTreshhold = 3;
-    float walkSpeed;
+    [SerializeField] float walkSpeed;
 
     GameObject player;
 
@@ -18,29 +16,16 @@ public class LargeEnemyController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        walkSpeed = Random.Range(3f, 4f);
-        //turnAroundTreshhold = Random.Range(1f, 3f);
     }
 
     void Update()
     {
+        HealthBarDisplayController.RenderHealthBar(transform.position, hitpoints);
         HandleWalking();
     }
 
     private void HandleWalking()
     {
-        // The enemy will walk in one direction for a random amount of time and then turn around
-        /*
-        turnAroundTimer += Time.deltaTime;
-        if(turnAroundTimer >= turnAroundTreshhold)
-        {
-            walkSpeed *= -1;
-            turnAroundTimer = 0;
-            turnAroundTreshhold = Random.Range(1, 2);
-        }
-        transform.Translate(walkSpeed * Time.deltaTime, 0, 0);
-        */
-
         if (player.transform.position.x > transform.position.x)
         {
             transform.Translate(new(walkSpeed * Time.deltaTime, 0));
@@ -49,9 +34,7 @@ public class LargeEnemyController : MonoBehaviour
         {
             transform.Translate(new(-walkSpeed * Time.deltaTime, 0));
         }
-        
     }
-
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("arm"))
         {
