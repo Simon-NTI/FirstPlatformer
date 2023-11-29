@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6843163017211645372
 Transform:
   m_ObjectHideFlags: 0
@@ -99,6 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0740b4b03c581c447a6a72a97a85000c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 5
+  defaultHealthBar: {fileID: 0}
+  playerUI: {fileID: 0}
   hitpoints: 2
 --- !u!50 &7081844980704107412
 Rigidbody2D:

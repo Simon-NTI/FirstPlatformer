@@ -7,12 +7,10 @@ using UnityEngine.UIElements;
 
 public class ArmController : MonoBehaviour
 {
-    [SerializeField] Sprite armSprite;
-    [SerializeField] Sprite parentSprite;
+    [SerializeField] Sprite armSprite, parentSprite;
     float lifetime;
-    [SerializeField] float initialLifeTime;
+    [SerializeField] float initialLifeTime, targetscale = 2.5f;
     [SerializeField] new BoxCollider2D collider;
-    [SerializeField] float targetscale = 2.5f;
     float scaleTimer, difference;
     void Start()
     {
@@ -29,8 +27,6 @@ public class ArmController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        print(lifetime);
 
         // Places the arm at the horizontal edge of the player sprite
 

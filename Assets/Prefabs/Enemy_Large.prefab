@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1048840898206208174}
   - component: {fileID: 6638924159890012002}
   - component: {fileID: 3325971738283549223}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Enemy_Large
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -103,8 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0740b4b03c581c447a6a72a97a85000c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 0
+  walkSpeed: 6
+  defaultHealthBar: {fileID: 0}
+  playerUI: {fileID: 0}
   hitpoints: 2
+  initialHitpoints: 2
 --- !u!61 &6638924159890012002
 BoxCollider2D:
   m_ObjectHideFlags: 0

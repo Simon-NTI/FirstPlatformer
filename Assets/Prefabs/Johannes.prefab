@@ -177,7 +177,9 @@ MonoBehaviour:
   arm: {fileID: 4203619793104788777, guid: 5952cae29f0260746a42a9c5fe1ec71b, type: 3}
   jumpForce: 1200
   feet: {fileID: 0}
-  groundRadius: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
